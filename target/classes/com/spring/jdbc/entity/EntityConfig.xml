@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ https://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context.xsd
+ ">
+
+	<!-- here we are config of DriverManagerDataSource Class inject and set 
+		a properties of driver class fields -->
+
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		name="manager">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/springjdbc" />
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>Anand@123</value>
+		</property>
+
+	</bean>
+
+	<!-- here we config a data sorce class jdbctemplate inject -->
+	<bean class="org.springframework.jdbc.core.JdbcTemplate"
+		name="jdbc">
+
+		<property name="dataSource">
+			<ref bean="manager" />
+		</property>
+
+	</bean>
+<!--  here we config a class Studentdeo-->
+	<bean class="com.spring.jdbc.entity.StudentDeo" name="deo">
+
+		<property name="template" ref="jdbc" />
+
+	</bean>
+
+	<context:component-scan
+		base-package="com/spring/jdbc/entity/StudentEntity.java" />
+</beans>
